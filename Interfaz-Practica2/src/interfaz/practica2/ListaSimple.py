@@ -34,19 +34,44 @@ class ListaSimple():
         else:
             return False
 
+    def verlista(self,NodoSimple):
+        nodos= ""
+        while NodoSimple:
+            # muestra el dato
+#            nodos + NodoSimple.dato
+            nodos = nodos + NodoSimple.dato
+            # ahora nodo apunta a nodo.prox
+            NodoSimple = NodoSimple.derecha
+        return nodos 
+    
+    def insertar(self,dato):
+        if vacio == True:
+            nuevo=NodoSimple(dato,None)
+            vacio = False
+#        else:
+#            nuevo=NodoSimple(dato,NodoSimple.derecha)
+            return dato
+    
+    
 lista = ListaSimple()
 vacio = lista.siVacio()
 contador = 0
 @app.route('/Agregar',methods=['POST'])  
 def agregar():
     if vacio == True:
-        parametro = str(request.form['dato'])
-        identificador = str(request.form['dato2'])
-        nuevo= NodoSimple(parametro, identificador)
-        lista.primero = nuevo
-        lista.ultimo = nuevo
-        nuevo.derecha = nuevo
-        return "Hola " + str(nuevo.getPalabra()) + str(nuevo.getIdentificador())+ str(contador+1)+ "!"
+#        v3=NodoSimple(request.form['dato'])
+#        v2=NodoSimple("Peras", v3)
+#        v1=NodoSimple("Manzanas", v2)
+        imprimor = lista.insertar(request.form['dato'])
+#        
+#        parametro = str(request.form['dato'])
+#        identificador = str(request.form['dato2'])
+#        nuevo= NodoSimple(parametro, identificador)
+#        lista.primero = nuevo
+#        lista.ultimo = nuevo
+#        nuevo.derecha = nuevo
+        return   str(imprimor)
+#        + str(nuevo.getPalabra()) + str(nuevo.getIdentificador())+ str(contador+1)+ "!"
 
 
 

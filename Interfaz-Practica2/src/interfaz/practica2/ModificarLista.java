@@ -10,8 +10,6 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
-import static interfaz.practica2.InterfazPractica2.getString;
-import static interfaz.practica2.InterfazPractica2.webClient;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -24,20 +22,27 @@ public class ModificarLista extends javax.swing.JFrame {
     
     public static OkHttpClient webClient = new OkHttpClient();
     static RequestBody formBody;
-    static URL url ;
+    static URL urlAgregar ;
     static Request request;
     
     public ModificarLista() {
-        initComponents();
+        try {
+            urlAgregar = new URL("http://localhost:5000/Agregar");            
+            request = new Request.Builder().url(urlAgregar).post(formBody).build();            
+            initComponents();
+        } catch (MalformedURLException ex) {
+            java.util.logging.Logger.getLogger(interfaz.practica2.InterfazPractica2.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(interfaz.practica2.InterfazPractica2.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @SuppressWarnings("unchecked")
     
-    public static String getString(String metodo, RequestBody formBody) {
+    public static String getStringAgregar( RequestBody formBody) {
 
         try {
-            url = new URL("http://localhost:5000/" + metodo);
-            request = new Request.Builder().url(url).post(formBody).build();
+            request = new Request.Builder().url(urlAgregar).post(formBody).build();
             Response response = webClient.newCall(request).execute();//Aqui obtiene la respuesta en dado caso si hayas pues un return en python
             String response_string = response.body().string();//y este seria el string de las respuesta
             return response_string;
@@ -142,7 +147,7 @@ public class ModificarLista extends javax.swing.JFrame {
         .add("dato", nombre)
         .add("dato2", "Apellido")
         .build();
-        String r = getString("Agregar", formBody);
+        String r = getStringAgregar(formBody);
         System.out.println(r + "---");
 
     }//GEN-LAST:event_btnAgregar2ActionPerformed
@@ -181,7 +186,7 @@ public class ModificarLista extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ModificarLista().setVisible(true);
+                new ModificarLista().setVisible(true);  
             }
         });
     }
